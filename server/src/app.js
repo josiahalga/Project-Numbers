@@ -15,9 +15,35 @@ app.get('/members_list', async (req,res) => {
   res.send(members)
 })
 
-app.post('/member_id', async (req,res) => {
-  const member = await database.getMember(req.body.member_id)
+app.get('/members/:id', async (req,res) => {
+  const member_id = req.params.id
+  const member = await database.getMember(member_id)
   res.send(member)
+})
+
+app.post('/members_list', async (req,res) => {
+  const { 
+    last_name, 
+    suffix, 
+    first_name, 
+    middle_name, 
+    birthdate, 
+    status, 
+    occupation, 
+    sex, 
+    blood_type, 
+    street_address, 
+    barangay, 
+    city, 
+    cell_no, 
+    landline, 
+    email_address, 
+    fb_username, 
+    baptism_status, 
+    deceased, 
+    auxiliary } = req.body
+    const new_member = await database.createMember(last_name, suffix, first_name, middle_name, birthdate, status, occupation, sex, blood_type, street_address, barangay, city, cell_no, landline, email_address, fb_username, baptism_status, deceased, auxiliary)
+    res.send(new_member)
 })
 
 app.post('/register', (req,res) => {

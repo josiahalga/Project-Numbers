@@ -24,5 +24,14 @@ async function getMember(id) { // eslint-disable-line no-unused-vars
     return rows
 }
 
+async function createMember(last_name, suffix, first_name, middle_name, birthdate, status, occupation, sex, blood_type, street_address, barangay, city, cell_no, landline, email_address, fb_username, baptism_status, deceased, auxiliary) {
+    const [result] = await pool.query(`
+    INSERT INTO members (last_name, suffix, first_name, middle_name, birthdate, status, occupation, sex, blood_type, street_address, barangay, city, cell_no, landline, email_address, fb_username, baptism_status, deceased, auxiliary)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    `, [last_name, suffix, first_name, middle_name, birthdate, status, occupation, sex, blood_type, street_address, barangay, city, cell_no, landline, email_address, fb_username, baptism_status, deceased, auxiliary])
+    const id = result.insertId
+    return getMember(id)
+}
 
-export default {getMembers, getMember}
+
+export default {getMembers, getMember, createMember}
