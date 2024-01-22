@@ -5,7 +5,7 @@
     <br>
     <input type="password" name="password" v-model="password" placeholder="password">
     <br>
-    <button @click="register">Register</button>
+    <button @click.prevent="register">Register</button>
   </div>
 </template>
 
