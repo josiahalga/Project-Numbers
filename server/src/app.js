@@ -21,8 +21,9 @@ app.get('/members/:id', async (req,res) => {
   res.send(member)
 })
 
-app.post('/members_list', async (req,res) => {
-  const { 
+app.post('/add_member', async (req,res) => {
+  try {
+    const { 
     last_name, 
     suffix, 
     first_name, 
@@ -44,6 +45,12 @@ app.post('/members_list', async (req,res) => {
     auxiliary } = req.body
     const new_member = await database.createMember(last_name, suffix, first_name, middle_name, birthdate, status, occupation, sex, blood_type, street_address, barangay, city, cell_no, landline, email_address, fb_username, baptism_status, deceased, auxiliary)
     res.send(new_member)
+  } catch (err) {
+    console.log(err)
+    res.status(400).send({
+      error: 'Error Occured'
+    })
+  }
 })
 
 app.post('/register', (req,res) => {
