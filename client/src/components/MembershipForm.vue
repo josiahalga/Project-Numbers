@@ -5,7 +5,7 @@
         cols="12"
         sm="10"
         md="8"
-        lg="6"
+        lg="4"
       >
         <div class="title">
           <h1>City Alliance Church<br>Membership Form</h1>
@@ -48,29 +48,20 @@
               label="Middle Name"
             ></v-text-field>
 
-            <v-dialog
-              ref="dialog"
-              v-model="modal"
-              :return-value="birthdate"
-              persistent
-              full-width
-              width="290px"
-            >
-              <template v-slot:activator="{ on }">
+            <VDatePicker v-model="birthdate">
+              <template #default="{ togglePopover }">
                 <v-text-field
                   v-model="birthdate"
                   label="Birthdate"
                   append-inner-icon="mdi-calendar-blank"
                   readonly
                   v-on="on"
-                  v-on:click:append-inner="modal=true"
+                  v-on:click:append-inner="togglePopover"
                   variant="outlined"
                   placeholder="YYYY-MM-DD"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="birthdate" color="primary" @click="setDate">
-              </v-date-picker>
-            </v-dialog>
+            </VDatePicker>
 
             <v-text-field variant="outlined"
               ref="status"
@@ -90,6 +81,9 @@
 
 <script>
   import AuthenticationService from '@/services/AuthenticationService';
+
+  const date = new Date();
+
   export default {
     data () {
       return {
@@ -97,7 +91,7 @@
         suffix: null,
         first_name: null,
         middle_name: null,
-        birthdate: null,
+        birthdate: date.toISOString().split('T')[0],
         status: null,
         errorMessages: null,
         formHasErrors: false,
@@ -111,13 +105,12 @@
     },
     methods: {
       clearSuffix() {
-        this.suffix = null
+        this.suffix = null,
+        this.birthdate = Date(this.birthdate).toISOString().split('T')[0]
       },
 
       setDate () {
-        this.modal = false,
-        console.log(this.birthdate.toISOString().split('T')[0]),
-        this.birthdate = this.birthdate.toISOString().split('T')[0]
+        this.modal = false
       },
 
       async submitForm () {
