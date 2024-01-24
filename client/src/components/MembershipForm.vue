@@ -14,6 +14,7 @@
         <v-card ref="form">
           <v-card-text>
             <v-text-field variant="outlined"
+              class="textfield"
               ref="lastname"
               v-model="last_name"
               :rules="[() => !!last_name || 'This field is required']"
@@ -82,8 +83,6 @@
 <script>
   import AuthenticationService from '@/services/AuthenticationService';
 
-  const date = new Date();
-
   export default {
     data () {
       return {
@@ -91,7 +90,7 @@
         suffix: null,
         first_name: null,
         middle_name: null,
-        birthdate: date.toISOString().split('T')[0],
+        birthdate: null,
         status: null,
         errorMessages: null,
         formHasErrors: false,
@@ -139,6 +138,7 @@
   #container .v-btn{
     margin: 10px;
   }
+
 
   .title {
     background-color: white;
